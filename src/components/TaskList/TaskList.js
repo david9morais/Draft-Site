@@ -2,13 +2,15 @@ import React from "react";
 import "./tasklist.css";
 import PropTypes from "prop-types";
 import TaskItem from "../TaskItem/TaskItem";
+import plusIcon from "../../img/plus-icon.svg";
 
 export default function TaskList({
   title,
   taskState,
   onAddTask,
   tasks,
-  onTaskUpdate
+  onTaskUpdate,
+  onDeleteTask
 }) {
   const addTask = (title, state) => {
     onAddTask("New Task", taskState);
@@ -26,11 +28,16 @@ export default function TaskList({
               title={task.title}
               taskState={task.state}
               onTaskUpdate={onTaskUpdate}
+              onDeleteTask={onDeleteTask}
             />
           );
         })}
+        {tasks.length === 0 && <div className="empty-list">Empty List</div>}
+        <button onClick={addTask} className="btn">
+          <img src={plusIcon} alt="plus" />
+          Add Task
+        </button>
       </div>
-      <button onClick={addTask}>Add Task</button>
     </div>
   );
 }
