@@ -24,11 +24,43 @@ export default function App() {
     });
   };
 
+  const updateTask = (id, title, state) => {
+    setTasks((existingTasks) => {
+      return existingTasks.map((task) => {
+        if (task.id === id) {
+          return { ...task, title, state };
+        } else {
+          return task;
+        }
+      });
+    });
+  };
+
   return (
     <div className="App">
       <Navbar />
       <div className="container">
-        <TaskList title="Pendent" onAddTask={addTask} tasks={tasks} />
+        <TaskList
+          title="Pendent"
+          onAddTask={addTask}
+          taskState="Pendent"
+          tasks={tasks.filter((t) => t.state === "Pendent")}
+          onTaskUpdate={updateTask}
+        />
+        <TaskList
+          title="In Process"
+          onAddTask={addTask}
+          taskState="In Process"
+          tasks={tasks.filter((t) => t.state === "In Process")}
+          onTaskUpdate={updateTask}
+        />
+        <TaskList
+          title="Finished"
+          onAddTask={addTask}
+          taskState="Finished"
+          tasks={tasks.filter((t) => t.state === "Finished")}
+          onTaskUpdate={updateTask}
+        />
       </div>
     </div>
   );
